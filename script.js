@@ -3,30 +3,37 @@
 const endpointUrl = "https://something/api/";
 
 function getAccount() {
-  const accountId = "1"; // MetaMask JS to get the accountID
-  getAccountAjax(accountId);
-}
+  const accountId = "1"; // MetaMask JS function to get the accountID here.
 
-function getAccountAjax(address) {
-  const endpoint = `account?address=${address}`;
-
-  $.ajax(endpoint,{
-    accepts: "application/json"
-  }).done( (data) => {
-    // temp vars
-    $("#name")[0] = data.name;
-    $("#description")[0] = data.description;
-    $("#imgNft")[0] = data.imgLink;
+  getAccountInfoAjax(accountId).done( (data) => {
+    $("#name").text(data.name);
+    $("#description").text(data.description);
+    $("#imgNft").attr("src", data.imgLink);
+    $("#imgNft").removeClass("visually-hidden");
   });
 }
 
-function getBadges(address) {
-  const endpoint = `badges?address=${address}`;
-  
-  $.ajax(endpoint,{
+function getAccountInfoAjax(address) {
+  const endpoint = `${endpointUrl}account?address=${address}`;
+
+  return $.ajax(endpoint,{
     accepts: "application/json"
-  }).done( (data) => {
+  });
+}
+
+function getBadges() {
+  const accountId = "1"; // MetaMask JS function to get the accountID here.
+
+  getBadgesInfoAjax(accountId).done( (data) => {
     // temp vars
     const badgeArray = data.d;
+  });
+}
+
+function getBadgesInfoAjax(address) {
+  const endpoint = `${endpointUrl}badges?address=${address}`;
+
+  return $.ajax(endpoint,{
+    accepts: "application/json"
   });
 }
