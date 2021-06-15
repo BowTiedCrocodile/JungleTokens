@@ -1,28 +1,32 @@
-//GET /account?address={address} => { name, description, img-link} for NFT
-//GET /badges?address={address} => [ { name, img-link } ]
-const endpointUrl = "https://something/api/";
+const endpointUrl = "https://degenistan.com/";
 
 function getAccount() {
-  const accountId = "1"; // MetaMask JS function to get the accountID here.
+  const accountId = $("#accountIDInput").val();
 
   getAccountInfoAjax(accountId).done( (data) => {
+    data = data[0].meta;
     $("#name").text(data.name);
     $("#description").text(data.description);
-    $("#imgNft").attr("src", data.imgLink);
+    $("#imgNft").attr("src", data.image);
     $("#imgNft").removeClass("visually-hidden");
   });
 }
 
 function getAccountInfoAjax(address) {
-  const endpoint = `${endpointUrl}account?address=${address}`;
+  const endpoint = `${endpointUrl}account`;
 
-  return $.ajax(endpoint,{
-    accepts: "application/json"
+  const data = `{"account":"${address}"}`;
+
+  return $.post({
+    url: endpoint,
+    contentType: "application/json",
+    accepts: "application/json",
+    data: data
   });
 }
 
 function getBadges() {
-  const accountId = "1"; // MetaMask JS function to get the accountID here.
+  const accountId = $("#accountIDInput").val();
 
   getBadgesInfoAjax(accountId).done( (data) => {
     // temp vars
@@ -34,6 +38,7 @@ function getBadgesInfoAjax(address) {
   const endpoint = `${endpointUrl}badges?address=${address}`;
 
   return $.ajax(endpoint,{
+    type: "POST",
     accepts: "application/json"
   });
 }
