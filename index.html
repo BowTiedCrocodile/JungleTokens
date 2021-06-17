@@ -10,6 +10,12 @@
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   </head>
+  <script>
+    let endpointUrl = '/';
+    if (window.location.host !== "degenistan.com") {
+      endpointUrl = 'https://degenistan.com/';
+    }
+  </script>
   <script src="script.js"></script>
   <body>
     <h1 class="text-center">Welcome to the BowTied Jungle!</h1>
@@ -40,7 +46,9 @@
         </div>
         <div class="row">
           <div class="fw-bold">Your Badges:</div>
-          <div id="badges"></div>
+          <div class="container" id="badges">
+            
+          </div>
         </div>
       </div>
     </div>

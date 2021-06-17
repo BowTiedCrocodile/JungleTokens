@@ -1,5 +1,3 @@
-const endpointUrl = '/'
-
 function getAccount () {
   const accountId = $('#accountIDInput').val()
 
@@ -29,17 +27,23 @@ function getBadges () {
   const accountId = $('#accountIDInput').val()
 
   getBadgesInfoAjax(accountId).done((data) => {
-    // temp vars
-    const badgeArray = data.d
+    data = data.forEach(element => {
+      $('#name').text(data.name)
+      $('#description').text(data.description)
+      $('#imgNft').attr('src', data.image)
+      $('#imgNft').removeClass('visually-hidden')    
+    });
   })
 }
 
 function getBadgesInfoAjax (address) {
   const endpoint = `${endpointUrl}badges?address=${address}`
 
-  return $.ajax(endpoint, {
-    type: 'POST',
-    accepts: 'application/json'
+  return $.post({
+    url: endpoint,
+    contentType: 'application/json',
+    accepts: 'application/json',
+    data: data
   })
 }
 
@@ -79,5 +83,9 @@ App = {
 $(function () {
   $(window).on('load', function () {
     App.init()
-  })
+  });
+
+  $('#accountIDInput').on('change', (event)=>{
+    event.target.value = event.target.value.trim();
+  });
 })
