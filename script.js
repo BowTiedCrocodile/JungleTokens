@@ -13,7 +13,7 @@ function getAccount () {
 function getAccountInfoAjax (address) {
   const endpoint = `${endpointUrl}account`
 
-  const data = `{"account":"${address}"}`
+  const data = `{"account":"${address}"}`;
 
   return $.post({
     url: endpoint,
@@ -25,19 +25,32 @@ function getAccountInfoAjax (address) {
 
 function getBadges () {
   const accountId = $('#accountIDInput').val()
+  $('#badges').empty();
 
   getBadgesInfoAjax(accountId).done((data) => {
-    data = data.forEach(element => {
-      $('#name').text(data.name)
-      $('#description').text(data.description)
-      $('#imgNft').attr('src', data.image)
-      $('#imgNft').removeClass('visually-hidden')    
+    const badges = $('#badges');
+    data.forEach(element => {
+      data = element.meta;
+      const badgeElement = $("<div></div>");
+      badgeElement.addClass("col-3");
+
+      badgeElement.append($(`<div class="fw-bold">Badge Name:</div>`));
+      badgeElement.append($(`<div>${data.name}</div>`));
+
+      badgeElement.append($(`<div class="fw-bold">Badge Description:</div>`));
+      badgeElement.append($(`<div>${data.description}</div>`));
+
+      badgeElement.append($(`<img src="${data.image}" width="100%"/>`))
+      badges.append( badgeElement )
     });
+    badges.removeClass('visually-hidden')    
   })
 }
 
 function getBadgesInfoAjax (address) {
   const endpoint = `${endpointUrl}badges?address=${address}`
+
+  const data = `{"account":"${address}"}`;
 
   return $.post({
     url: endpoint,
