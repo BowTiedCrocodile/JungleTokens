@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "hookyqr.beautify",
+        "coenraads.bracket-pair-colorizer",
+        "christian-kohler.npm-intellisense",
+        "msjsdiag.vscode-react-native",
+        "dsznajder.es7-react-js-snippets",
+        "dbaeumer.vscode-eslint"
+    ]
+}
